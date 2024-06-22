@@ -4,12 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5; url=https://www.kezez.com/" />
+    <link rel="icon" type="image/ico" href="https://www.kezez.com/favicon.ico">
     <title>REDIECT</title>
 </head>
 <body>
-    <h1 class="">已迁移至：<a href="https://www.kezez.com/">https://www.kezez.com/</a></h1>
-    <h2>将会在5秒钟后自动跳转，如跳转失败请手动点击上方链接</h2>
+    <h1 class="">已迁移至：<a id="link" href="https://www.kezez.com/">https://www.kezez.com/</a></h1>
+    <h2>将会在<span id="countdown">5</span>秒钟后自动跳转，如跳转失败请手动点击上方链接</h2>
+    <script>
+        var path = window.location.pathname;
 
+        var link = document.getElementById('link');  
+  
+        // 检查元素是否存在  
+        if (link) {  
+            var newLink = 'https://www.kezez.com' + path;
+            // 替换href属性  
+            link.href = newLink;
+            
+            // 替换内容（textContent不会渲染HTML标签，innerText在某些情况下可能会）  
+            link.textContent = newLink; 
+            // 或者如果你想要包括HTML标签（但通常不推荐用于链接文本）  
+            // link.innerHTML = 'New <b>Link</b>';  
+        }
+
+        // 初始倒计时秒数  
+        var countdownSeconds = 5;  
+        var countdownElement = document.getElementById('countdown');  
+        
+        // 更新倒计时的函数  
+        function updateCountdown() {  
+            if (countdownSeconds >= 0) {  
+                countdownElement.textContent = countdownSeconds;  
+                countdownSeconds--;  
+                setTimeout(updateCountdown, 1000); // 每秒更新一次  
+            } else {  
+                // 倒计时结束，进行跳转  
+                var currentPath = window.location.pathname + window.location.search;  
+                var targetUrl = "https://www.kezez.com" + window.location.pathname;  
+                window.location.replace(targetUrl);  
+            }  
+        }  
+        
+        // 页面加载完成后开始倒计时  
+        window.onload = updateCountdown;
+    </script>
 </body>
 </html>
